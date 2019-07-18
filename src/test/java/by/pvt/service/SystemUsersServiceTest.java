@@ -49,7 +49,7 @@ public class SystemUsersServiceTest extends DBTestCase {
     public void testGetSystemUsers() {
         List<SystemUsers> systemUsers = systemUsersService.getSystemUsers();
         assertNotNull(systemUsers);
-        assertEquals(4, systemUsers.size());
+        assertEquals(5, systemUsers.size());
         // renat
         SystemUsers renat = new SystemUsers();
         renat.setId(1);
@@ -143,7 +143,18 @@ public class SystemUsersServiceTest extends DBTestCase {
     }
 
     @Test
-    public void deleteSystemUser() {
+    public void testDeleteSystemUser() {
+        assertEquals(1, systemUsersService.deleteSystemUser(10));
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hello_mysql_junit",
+                "root", "root")) {
+            PreparedStatement ps = connection.prepareStatement("select * from system_users where `id` = 10");
+            ResultSet rs = ps.executeQuery();
+            assertFalse(rs.next());
+            rs.close();
+            ps.close();
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

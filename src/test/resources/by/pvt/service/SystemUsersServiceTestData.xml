@@ -3,4 +3,5 @@
     <system_users id="2" username="kolyan" active="true" dateofbirth="417657612" />
     <system_users id="3" username="Vika" active="false" dateofbirth="1134263106" />
     <system_users id="4" username="RoberT" active="true" dateofbirth="1134263116" />
+    <system_users id="10" username="deleteme" active="true" dateofbirth="200" />
 </dataset>
