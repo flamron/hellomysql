@@ -157,4 +157,31 @@ public class SystemUsersServiceTest extends DBTestCase {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void testUpdateSystemUser() {
+        SystemUsers petter = new SystemUsers();
+        petter.setId(3);
+        petter.setUsername("petter");
+        petter.setActive(true);
+        petter.setDateofbirth("301301");
+        //systemUsersService.addSystemUser(petter);
+        //systemUsersService.deleteSystemUser(3);
+        systemUsersService.updateSystemUser(petter);
+
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hello_mysql_junit",
+                "root", "root")) {
+            PreparedStatement ps = connection.prepareStatement("select * from system_users where `id` = 3");
+            ResultSet rs = ps.executeQuery();
+            assertTrue(rs.next());
+            assertEquals(3, rs.getInt("id"));
+            assertEquals("petter", rs.getString("username"));
+            assertEquals(true, rs.getBoolean("active"));
+            rs.close();
+            ps.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

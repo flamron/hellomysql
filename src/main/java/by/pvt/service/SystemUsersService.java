@@ -59,21 +59,17 @@ public class SystemUsersService {
             log.info("Deleted systemUser with id = " + id + " with result = " + result);
             return result;
         }
-        /*int result = sqlSessionFactory
-                .openSession()
-                .getMapper(SystemUsersMapper.class)
-                .insert(record);*/
     }
 
-    public static void main(String[] args) {
-        SystemUsersService systemUsersService = new SystemUsersService("testing");
-        /*SystemUsers petter = new SystemUsers();
-        petter.setId(101);
-        petter.setUsername("petter");
-        petter.setActive(true);
-        petter.setDateofbirth("301301");
-        systemUsersService.addSystemUser(petter);*/
-        systemUsersService.deleteSystemUser(3);
+    public int updateSystemUser(SystemUsers record) {
+        try (SqlSession session = sqlSessionFactory.openSession()) {
+            SystemUsersMapper mapper = session.getMapper(SystemUsersMapper.class);
+            int result = mapper.updateByPrimaryKey(record);
+            session.commit();
+            log.info("Update systemUser with id = " + record.getId() + " with result = " + result);
+            return result;
+        }
     }
+
 
 }
