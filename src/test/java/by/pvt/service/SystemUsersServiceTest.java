@@ -26,7 +26,7 @@ public class SystemUsersServiceTest extends DBTestCase {
     public SystemUsersServiceTest() {
         super();
         System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_DRIVER_CLASS, "com.mysql.jdbc.Driver");
-        System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_CONNECTION_URL, "jdbc:mysql://localhost:3306/hello_mysql_junit");
+        System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_CONNECTION_URL, "jdbc:mysql://localhost:3306/hello_mysql_junit?useSSL=false");
         System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_USERNAME, "root");
         System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_PASSWORD, "root");
 
@@ -41,8 +41,8 @@ public class SystemUsersServiceTest extends DBTestCase {
         if (user2 == null) return false;
         return Objects.equals(user1.getId(), user2.getId()) &&
                 Objects.equals(user1.getUsername(), user2.getUsername()) &&
-                Objects.equals(user1.getActive(), user2.getActive());/* &&
-                Objects.equals(user1.getDateofbirth(), user2.getDateofbirth());*/
+                Objects.equals(user1.getActive(), user2.getActive()) &&
+                Objects.equals(user1.getDateofbirth(), user2.getDateofbirth());
     }
 
     @Test
@@ -55,31 +55,31 @@ public class SystemUsersServiceTest extends DBTestCase {
         renat.setId(1);
         renat.setUsername("renat");
         renat.setActive(true);
-        renat.setDateofbirth("417657600");
+        renat.setDateofbirth(417657600L);
         // kolyan
         SystemUsers kolyan = new SystemUsers();
         kolyan.setId(2);
         kolyan.setUsername("kolyan");
         kolyan.setActive(true);
-        kolyan.setDateofbirth("417657612");
+        kolyan.setDateofbirth(417657612L);
         // Vika
         SystemUsers vika = new SystemUsers();
         vika.setId(3);
         vika.setUsername("Vika");
         vika.setActive(false);
-        vika.setDateofbirth("1134263106");
+        vika.setDateofbirth(1134263106L);
         // RoberT
         SystemUsers robert = new SystemUsers();
         robert.setId(4);
         robert.setUsername("RoberT");
         robert.setActive(true);
-        robert.setDateofbirth("1134263116");
+        robert.setDateofbirth(1134263116L);
         // Margo
         SystemUsers margo = new SystemUsers();
         margo.setId(5);
         margo.setUsername("margo");
         margo.setActive(true);
-        margo.setDateofbirth("417657609");
+        margo.setDateofbirth(417657609L);
 
         Iterator<SystemUsers> iterator = systemUsers.iterator();
         if (iterator.hasNext()) {
@@ -113,12 +113,12 @@ public class SystemUsersServiceTest extends DBTestCase {
         petter.setId(101);
         petter.setUsername("petter");
         petter.setActive(true);
-        petter.setDateofbirth("301301");
+        petter.setDateofbirth(301301L);
         systemUsersService.addSystemUser(petter);
 
         SystemUsers user = new SystemUsers();
 
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hello_mysql_junit",
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hello_mysql_junit?useSSL=false",
                     "root", "root")) {
             PreparedStatement ps = connection.prepareStatement("select * from system_users where `id` = 101");
             ResultSet rs = ps.executeQuery();
@@ -129,6 +129,7 @@ public class SystemUsersServiceTest extends DBTestCase {
                 user.setId(rs.getInt("id"));
                 user.setUsername(rs.getString("username"));
                 user.setActive(rs.getBoolean("active"));
+                user.setDateofbirth(rs.getLong("dateofbirth"));
                 rowCount++;
             }
             assertEquals(1, rowCount);
@@ -145,7 +146,7 @@ public class SystemUsersServiceTest extends DBTestCase {
     @Test
     public void testDeleteSystemUser() {
         assertEquals(1, systemUsersService.deleteSystemUser(10));
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hello_mysql_junit",
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hello_mysql_junit?useSSL=false",
                 "root", "root")) {
             PreparedStatement ps = connection.prepareStatement("select * from system_users where `id` = 10");
             ResultSet rs = ps.executeQuery();
@@ -164,12 +165,12 @@ public class SystemUsersServiceTest extends DBTestCase {
         petter.setId(3);
         petter.setUsername("petter");
         petter.setActive(true);
-        petter.setDateofbirth("301301");
+        petter.setDateofbirth(301301L);
         //systemUsersService.addSystemUser(petter);
         //systemUsersService.deleteSystemUser(3);
         systemUsersService.updateSystemUser(petter);
 
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hello_mysql_junit",
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hello_mysql_junit?useSSL=false",
                 "root", "root")) {
             PreparedStatement ps = connection.prepareStatement("select * from system_users where `id` = 3");
             ResultSet rs = ps.executeQuery();

@@ -16,7 +16,7 @@ public class HelloMysqlTest extends DBTestCase {
     public HelloMysqlTest(String name) {
         super(name);
         System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_DRIVER_CLASS, "com.mysql.jdbc.Driver");
-        System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_CONNECTION_URL, "jdbc:mysql://localhost:3306/hello_mysql_junit");
+        System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_CONNECTION_URL, "jdbc:mysql://localhost:3306/hello_mysql_junit?useSSL=false");
         System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_USERNAME, "root");
         System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_PASSWORD, "root");
     }
@@ -29,7 +29,7 @@ public class HelloMysqlTest extends DBTestCase {
     @Test
     public void testConnection() {
         try {
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hello_mysql_junit",
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hello_mysql_junit?useSSL=false",
                     "root", "root");
             PreparedStatement ps = connection.prepareStatement("select * from system_users");
             ResultSet rs = ps.executeQuery();

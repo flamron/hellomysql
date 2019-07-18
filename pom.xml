@@ -57,7 +57,7 @@
                         <configuration>
                             <changeLogFile>src/main/resources/changeLog.xml</changeLogFile>
                             <driver>com.mysql.jdbc.Driver</driver>
-                            <url>jdbc:mysql://localhost:3306/hello_mysql?createDatabaseIfNotExist=true</url>
+                            <url>jdbc:mysql://localhost:3306/hello_mysql?createDatabaseIfNotExist=true&amp;useSSL=false</url>
                             <username>root</username>
                             <password>root</password>
                         </configuration>
@@ -71,7 +71,7 @@
                         <configuration>
                             <changeLogFile>src/main/resources/changeLog.xml</changeLogFile>
                             <driver>com.mysql.jdbc.Driver</driver>
-                            <url>jdbc:mysql://localhost:3306/hello_mysql_junit?createDatabaseIfNotExist=true</url>
+                            <url>jdbc:mysql://localhost:3306/hello_mysql_junit?createDatabaseIfNotExist=true&amp;useSSL=false</url>
                             <username>root</username>
                             <password>root</password>
                         </configuration>
