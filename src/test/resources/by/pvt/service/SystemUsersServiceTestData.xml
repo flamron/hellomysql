@@ -1,0 +1,6 @@
+<dataset>
+    <system_users id="1" username="renat" active="true" dateofbirth="417657600" />
+    <system_users id="2" username="kolyan" active="true" dateofbirth="417657612" />
+    <system_users id="3" username="Vika" active="false" dateofbirth="1134263106" />
+    <system_users id="4" username="RoberT" active="true" dateofbirth="1134263116" />
+</dataset>
